@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell([System.IO.File]::ReadAllText\\(\"c:\\\\Users\\\\tlietzow\\\\Code\\\\BubleSplash\\\\2.0\\\\sanxia-explorer.html\", [System.Text.Encoding]::UTF8\\) | Select-String -Pattern \"nameZh\" | Select-Object -First 10)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\tlietzow\\\\Code\\\\BubleSplash\\\\2.0\\\\sanxia-explorer\" -Force)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\tlietzow\\\\Code\\\\BubleSplash\\\\2.0\\\\sanxia-explorer\\\\src\" -Force)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\tlietzow\\\\Code\\\\BubleSplash\\\\2.0\\\\sanxia-explorer\\\\src\\\\data\" -Force)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\tlietzow\\\\Code\\\\BubleSplash\\\\2.0\\\\sanxia-explorer\\\\src\\\\components\" -Force)",
+      "Bash(npm --version)"
+    ]
+  }
+}
