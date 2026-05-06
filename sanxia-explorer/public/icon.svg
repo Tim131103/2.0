@@ -1,0 +1,19 @@
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <title>Localift Icon</title>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="80" height="80" rx="16" fill="#EAF3DE"/>
+
+  <!-- Leaf body -->
+  <path d="M40 14 C40 14 62 22 62 40 C62 54 52 62 40 62 C28 62 18 54 18 40 C18 22 40 14 40 14Z" fill="#1D9E75"/>
+
+  <!-- Leaf highlight -->
+  <path d="M40 14 C40 14 62 22 62 40 C62 54 52 62 40 62 C28 62 18 54 18 40 C18 22 40 14 40 14Z" fill="#9FE1CB" fill-opacity="0.25"/>
+
+  <!-- Leaf stem -->
+  <line x1="40" y1="62" x2="40" y2="70" stroke="#1D9E75" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Upward arrow -->
+  <path d="M29 34 L40 14 L51 34" fill="none" stroke="#EF9F27" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+</svg>

@@ -11,6 +11,8 @@ export const shops = [
     color: '#C9933A',
     icon: '🥐',
     walkToNext: '2 min walk to Temple',
+    lat: 24.9448,
+    lng: 121.3710,
   },
   {
     id: 'temple',
@@ -24,6 +26,8 @@ export const shops = [
     color: '#B33A3A',
     icon: '🏯',
     walkToNext: '5 min walk to Workshop',
+    lat: 24.9453,
+    lng: 121.3700,
   },
   {
     id: 'indigo',
@@ -37,6 +41,8 @@ export const shops = [
     color: '#2B2D6E',
     icon: '🎨',
     walkToNext: '3 min walk to Tea House',
+    lat: 24.9456,
+    lng: 121.3722,
   },
   {
     id: 'tea',
@@ -50,5 +56,7 @@ export const shops = [
     color: '#3A6B3A',
     icon: '🍵',
     walkToNext: '',
+    lat: 24.9451,
+    lng: 121.3732,
   },
 ];

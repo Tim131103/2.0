@@ -160,39 +160,45 @@ export default function RoutePlanner({ setPage }) {
                 </div>
               </div>
 
-              {/* Mock map */}
-              <div
-                className="mt-6 rounded-xl overflow-hidden border border-stone-200 flex items-center justify-center h-44 relative"
-                style={{ background: 'linear-gradient(135deg, #e8e4da 0%, #d4cfc4 100%)' }}
-              >
-                <div
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    backgroundImage:
-                      'linear-gradient(#2B2D6E33 1px, transparent 1px), linear-gradient(90deg, #2B2D6E33 1px, transparent 1px)',
-                    backgroundSize: '30px 30px',
-                  }}
+              {/* Real OpenStreetMap with overlaid markers */}
+              <div className="mt-6 rounded-xl overflow-hidden border border-stone-200 relative" style={{ height: 260 }}>
+                <iframe
+                  title="Sanxia Old Street Map"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=121.368%2C24.942%2C121.375%2C24.948&layer=mapnik"
+                  className="w-full h-full border-0"
+                  loading="lazy"
                 />
-                {route.map((shop, i) => (
-                  <div
-                    key={shop.id}
-                    className="absolute flex flex-col items-center"
-                    style={{ left: `${15 + 22 * i}%`, top: `${30 + (i % 2) * 25}%` }}
-                  >
+                {/* Overlaid markers — positioned via bbox coordinate math */}
+                {route.map((shop, i) => {
+                  const BBOX = { west: 121.368, east: 121.375, north: 24.948, south: 24.942 };
+                  const x = ((shop.lng - BBOX.west) / (BBOX.east - BBOX.west)) * 100;
+                  const y = ((BBOX.north - shop.lat) / (BBOX.north - BBOX.south)) * 100;
+                  return (
                     <div
-                      className="w-7 h-7 rounded-full text-white flex items-center justify-center text-xs font-bold shadow-md border-2 border-white"
-                      style={{ background: shop.color }}
+                      key={shop.id}
+                      className="absolute flex flex-col items-center pointer-events-none"
+                      style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -100%)' }}
                     >
-                      {i + 1}
+                      <div
+                        className="w-8 h-8 rounded-full text-white flex items-center justify-center text-xs font-bold shadow-lg border-2 border-white"
+                        style={{ background: shop.color }}
+                      >
+                        {i + 1}
+                      </div>
+                      <div className="bg-white text-xs px-1.5 py-0.5 rounded shadow mt-0.5 font-medium whitespace-nowrap">
+                        {shop.icon} {shop.name.split(' ')[0]}
+                      </div>
                     </div>
-                    <div className="bg-white text-xs px-1.5 py-0.5 rounded shadow mt-1 font-medium">
-                      {shop.icon}
-                    </div>
-                  </div>
-                ))}
-                <p className="relative z-10 text-stone-500 text-xs bg-white/80 px-3 py-1 rounded-full mt-20">
-                  Interactive map coming soon
-                </p>
+                  );
+                })}
+                <a
+                  href={`https://www.openstreetmap.org/?mlat=24.9452&mlon=121.3712#map=17/24.9452/121.3712`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-2 right-2 bg-white/90 text-xs text-[#2B2D6E] px-2 py-1 rounded shadow font-medium"
+                >
+                  Open in Maps ↗
+                </a>
               </div>
             </>
           )}

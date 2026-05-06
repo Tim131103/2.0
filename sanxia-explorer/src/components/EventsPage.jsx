@@ -1,9 +1,33 @@
+import { useCallback } from 'react';
 import { shops } from '../data/shops';
 import { events } from '../data/events';
+import { usePullToRefresh } from '../hooks/usePullToRefresh';
 
 export default function EventsPage() {
+  const handleRefresh = useCallback(() => new Promise((res) => setTimeout(res, 800)), []);
+  const { refreshing, pullIndicator } = usePullToRefresh(handleRefresh);
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-14">
+      <div
+        className="flex justify-center overflow-hidden transition-all duration-200"
+        style={{ height: pullIndicator > 0 || refreshing ? 48 : 0 }}
+      >
+        <div className="flex items-center gap-2 text-[#2B2D6E] text-sm font-medium">
+          <svg
+            className="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            style={{ animation: refreshing ? 'spinSlow 0.8s linear infinite' : undefined }}
+          >
+            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+          </svg>
+          {refreshing ? 'Refreshing…' : 'Release to refresh'}
+        </div>
+      </div>
       <div className="mb-10">
         <p className="text-[#C9933A] text-xs font-bold tracking-[0.2em] uppercase mb-1">
           What's On

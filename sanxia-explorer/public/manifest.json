@@ -1,0 +1,98 @@
+{
+  "name": "Sanxia Old Street Explorer",
+  "short_name": "三峽老街",
+  "description": "Explore Sanxia Old Street — earn points, discover shops, plan your walk.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF6EF",
+  "theme_color": "#2B2D6E",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/launchericon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/launchericon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/launchericon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/launchericon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/launchericon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/launchericon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "lifestyle"],
+  "lang": "en",
+  "shortcuts": [
+    {
+      "name": "Browse Shops",
+      "short_name": "Shops",
+      "description": "View all shops on Sanxia Old Street",
+      "url": "/?page=shops",
+      "icons": [{ "src": "/icons/launchericon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Plan My Route",
+      "short_name": "Route",
+      "description": "Plan a walking route",
+      "url": "/?page=route",
+      "icons": [{ "src": "/icons/launchericon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "My Points",
+      "short_name": "Points",
+      "description": "Check loyalty points and rewards",
+      "url": "/?page=points",
+      "icons": [{ "src": "/icons/launchericon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Upcoming Events",
+      "short_name": "Events",
+      "description": "See workshops and festivals",
+      "url": "/?page=events",
+      "icons": [{ "src": "/icons/launchericon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
+}

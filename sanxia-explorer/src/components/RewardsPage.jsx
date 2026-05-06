@@ -57,17 +57,25 @@ export default function RewardsPage({ userPoints }) {
 
         {nextTier ? (
           <>
-            <div className="flex justify-between text-xs text-white/50 mb-1">
+            <div className="flex justify-between text-xs text-white/50 mb-2">
               <span>{currentTier.name}</span>
-              <span>
-                {nextTier.min - userPoints} pts to {nextTier.name}
+              <span className="text-white/80 font-semibold">
+                {nextTier.min - userPoints} pts to {nextTier.emoji} {nextTier.name}
               </span>
             </div>
-            <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+            <div className="h-3 bg-white/20 rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#C9933A] rounded-full"
-                style={{ width: `${progress}%` }}
+                className="h-full rounded-full transition-all duration-700 ease-out"
+                style={{
+                  width: `${progress}%`,
+                  background: 'linear-gradient(90deg, #C9933A, #f0b94a)',
+                  boxShadow: '0 0 8px rgba(201,147,58,0.6)',
+                }}
               />
+            </div>
+            <div className="flex justify-between text-xs text-white/40 mt-1.5">
+              <span>{currentTier.min} pts</span>
+              <span>{nextTier.min} pts</span>
             </div>
           </>
         ) : (
