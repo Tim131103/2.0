@@ -1,4 +1,4 @@
-export default function Navbar({ page, setPage, userPoints }) {
+export default function Navbar({ page, setPage, userPoints, onLogout }) {
   return (
     <header className="sticky top-0 z-50 bg-[#2B2D6E] text-white shadow-md"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
@@ -17,13 +17,22 @@ export default function Navbar({ page, setPage, userPoints }) {
           </div>
         </button>
 
-        <button
-          onClick={() => setPage('points')}
-          className="flex items-center gap-1.5 bg-[#C9933A] px-3 py-1.5 rounded-full text-sm font-bold shadow active:scale-95 transition-transform"
-        >
-          <span>⭐</span>
-          <span>{userPoints} pts</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setPage('points')}
+            className="flex items-center gap-1.5 bg-[#C9933A] px-3 py-1.5 rounded-full text-sm font-bold shadow active:scale-95 transition-transform"
+          >
+            <span>⭐</span>
+            <span>{userPoints} pts</span>
+          </button>
+          <button
+            onClick={onLogout}
+            className="text-white/50 hover:text-white/80 transition-colors px-1 py-1 text-lg leading-none"
+            title="Sign out"
+          >
+            ⏏
+          </button>
+        </div>
       </div>
     </header>
   );

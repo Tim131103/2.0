@@ -2,53 +2,56 @@ const TABS = [
   {
     page: 'home',
     label: 'Home',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-        <path d="M10.707 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 19 11h-1v9a1 1 0 0 1-1 1h-4v-5H11v5H7a1 1 0 0 1-1-1v-9H5a1 1 0 0 1-.707-1.707l7-7z" />
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z" fill={active ? 'currentColor' : 'none'} fillOpacity={active ? 0.15 : 0} />
+        <path d="M9 21V12h6v9" />
       </svg>
     ),
   },
   {
     page: 'shops',
     label: 'Shops',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-        <path d="M4 4h16l-1.5 9H5.5L4 4zm0 0H2M5.5 13l-1 5h15l-1-5M9 17v2m6-2v2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-        <path d="M4 4l1.5 9h13L20 4H4z" fill="currentColor" fillOpacity="0.15" />
-        <path d="M8 4V3a1 1 0 0 1 2 0v1M14 4V3a1 1 0 0 1 2 0v1" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" fill={active ? 'currentColor' : 'none'} fillOpacity={active ? 0.15 : 0} />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
       </svg>
     ),
   },
   {
     page: 'points',
     label: 'Points',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z" />
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" className="w-6 h-6" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ),
   },
   {
     page: 'route',
     label: 'Route',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M3 7a3 3 0 1 0 6 0 3 3 0 0 0-6 0z" fill="currentColor" fillOpacity="0.2" />
-        <path d="M15 17a3 3 0 1 0 6 0 3 3 0 0 0-6 0z" fill="currentColor" fillOpacity="0.2" />
-        <path d="M6 10v4a4 4 0 0 0 4 4h4" />
-        <path d="M18 14V7h-5" />
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="6" cy="19" r="2" fill={active ? 'currentColor' : 'none'} fillOpacity={active ? 0.3 : 0} />
+        <circle cx="18" cy="5" r="2" fill={active ? 'currentColor' : 'none'} fillOpacity={active ? 0.3 : 0} />
+        <path d="M6 17V7a2 2 0 0 1 2-2h3" />
+        <path d="M18 7v10a2 2 0 0 1-2 2h-3" />
       </svg>
     ),
   },
   {
     page: 'events',
     label: 'Events',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-        <rect x="3" y="4" width="18" height="18" rx="2" fill="currentColor" fillOpacity="0.15" stroke="currentColor" strokeWidth="1.5" fill="none" />
-        <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-        <rect x="7" y="13" width="3" height="3" rx="0.5" fill="currentColor" />
-        <rect x="14" y="13" width="3" height="3" rx="0.5" fill="currentColor" />
+    icon: (active) => (
+      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" fill={active ? 'currentColor' : 'none'} fillOpacity={active ? 0.12 : 0} />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+        <rect x="8" y="14" width="2" height="2" rx="0.3" fill="currentColor" stroke="none" />
+        <rect x="14" y="14" width="2" height="2" rx="0.3" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
@@ -56,32 +59,34 @@ const TABS = [
 
 export default function BottomNav({ page, setPage }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-2px_12px_rgba(0,0,0,0.08)]"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 px-3"
+      style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}
     >
-      <div className="flex items-stretch">
-        {TABS.map((tab) => {
-          const active = page === tab.page;
-          return (
-            <button
-              key={tab.page}
-              onClick={() => setPage(tab.page)}
-              className={`flex-1 flex flex-col items-center justify-center py-2 gap-0.5 transition-colors ${
-                active ? 'text-[#2B2D6E]' : 'text-gray-400 hover:text-gray-600'
-              }`}
-            >
-              <span className={`transition-transform ${active ? 'scale-110' : ''}`}>
-                {tab.icon}
-              </span>
-              <span className={`text-[10px] font-semibold tracking-wide ${active ? 'text-[#2B2D6E]' : ''}`}>
-                {tab.label}
-              </span>
-              {active && (
-                <span className="absolute top-0 h-0.5 w-8 bg-[#2B2D6E] rounded-b-full" />
-              )}
-            </button>
-          );
-        })}
+      <div className="bg-white rounded-2xl shadow-[0_4px_24px_rgba(43,45,110,0.13)] border border-[#2B2D6E]/10">
+        <div className="flex items-center">
+          {TABS.map((tab) => {
+            const active = page === tab.page;
+            return (
+              <button
+                key={tab.page}
+                onClick={() => setPage(tab.page)}
+                className="flex-1 flex flex-col items-center justify-center py-3 gap-1 transition-all active:scale-95"
+              >
+                <span className={`transition-colors ${active ? 'text-[#C9933A]' : 'text-gray-400'}`}>
+                  {tab.icon(active)}
+                </span>
+                <span
+                  className={`text-[10px] tracking-wide transition-all ${
+                    active ? 'text-[#C9933A] font-bold' : 'text-gray-400 font-medium'
+                  }`}
+                >
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </nav>
   );

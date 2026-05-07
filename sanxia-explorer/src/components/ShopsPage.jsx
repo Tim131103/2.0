@@ -1,27 +1,25 @@
 import { useState, useCallback } from 'react';
 import { shops } from '../data/shops';
+import { api } from '../api';
 import { usePullToRefresh } from '../hooks/usePullToRefresh';
 
-export default function ShopsPage({ userPoints, addPoints }) {
-  const [checkedIn, setCheckedIn] = useState(() => {
-    return new Set(JSON.parse(localStorage.getItem('checkedIn') || '[]'));
-  });
+export default function ShopsPage({ checkedIn, token, onCheckInSuccess }) {
   const [toast, setToast] = useState(null);
 
-  function handleCheckIn(shop) {
+  async function handleCheckIn(shop) {
     if (checkedIn.has(shop.id)) return;
-    const next = new Set([...checkedIn, shop.id]);
-    setCheckedIn(next);
-    localStorage.setItem('checkedIn', JSON.stringify([...next]));
-    addPoints(shop.points);
-    setToast(`+${shop.points} pts earned at ${shop.name}!`);
-    setTimeout(() => setToast(null), 2500);
+    try {
+      const result = await api.checkIn(shop.id, token);
+      onCheckInSuccess({ shopId: shop.id, totalPoints: result.totalPoints });
+      setToast(`+${result.pointsAwarded} pts earned at ${shop.name}!`);
+      setTimeout(() => setToast(null), 2500);
+    } catch (err) {
+      setToast(err.message);
+      setTimeout(() => setToast(null), 2500);
+    }
   }
 
-  const handleRefresh = useCallback(() => {
-    return new Promise((res) => setTimeout(res, 800));
-  }, []);
-
+  const handleRefresh = useCallback(() => new Promise((res) => setTimeout(res, 800)), []);
   const { refreshing, pullIndicator } = usePullToRefresh(handleRefresh);
 
   return (
@@ -63,17 +61,6 @@ export default function ShopsPage({ userPoints, addPoints }) {
         </p>
         <div className="mt-3 text-sm text-stone-400">
           {checkedIn.size}/{shops.length} visited
-          {checkedIn.size > 0 && (
-            <button
-              className="ml-3 text-xs text-red-400 underline"
-              onClick={() => {
-                setCheckedIn(new Set());
-                localStorage.removeItem('checkedIn');
-              }}
-            >
-              reset
-            </button>
-          )}
         </div>
       </div>
 

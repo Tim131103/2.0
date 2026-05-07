@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.netlify.zippy_fox_a8923a.twa",
+        "sha256_cert_fingerprints": ["FD:2C:D5:E4:2A:4D:37:2E:3E:52:6B:E0:7A:A4:6A:42:7E:71:B2:B7:3C:5D:94:A4:45:81:A1:70:15:F5:5D:7D"]
+      }
+    }]

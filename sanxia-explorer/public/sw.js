@@ -18,10 +18,11 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Skip non-GET and cross-origin requests
   if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
     return;
   }
+  // Never cache API responses
+  if (event.request.url.includes('/api/')) return;
   event.respondWith(
     caches.match(event.request).then(
       (cached) => cached ?? fetch(event.request).then((response) => {
