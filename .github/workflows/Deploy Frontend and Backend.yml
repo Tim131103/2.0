@@ -1,0 +1,52 @@
+name: Deploy Frontend and Backend
+
+on:
+  # Erlaubt den Start per Knopfdruck im GitHub-Reiter "Actions"
+  workflow_dispatch:
+
+  # Falls du es später doch automatisieren willst (z.B. bei jedem Push auf main),
+  # kannst du die folgenden Zeilen einkommentieren:
+  # push:
+  #   branches:
+  #     - main
+
+jobs:
+  # -----------------------------------------------------------------
+  # 1. FRONTEND JOB: Baut und deployt die statische Seite auf Netlify
+  # -----------------------------------------------------------------
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Setze hier deine genutzte Node-Version (z.B. 18, 20, 22)
+          cache: 'npm'       # Nutzt Caching für schnellere Builds. Alternativen: 'yarn' oder 'pnpm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Frontend
+        run: npm run build   # Erstellt den statischen Produktions-Ordner (meist 'dist' oder 'build')
+
+      - name: Deploy to Netlify
+        uses: netlify/actions/cli@master
+        with:
+          # ACHTUNG: Ändere 'dist' zu 'build', falls dein Framework (z.B. React/Vite) einen anderen Ordner nutzt
+          args: deploy --dir=dist --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  # -----------------------------------------------------------------
+  # 2. BACKEND JOB: Triggert das Deployment auf Render via Webhook
+  # -----------------------------------------------------------------
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deploy
+        # Ein einfacher HTTP-POST-Aufruf signalisiert Render, das Repo neu zu ziehen und zu starten
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
