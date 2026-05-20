@@ -1,0 +1,186 @@
+@startuml Sanxia_Explorer_UseCase
+
+' ─────────────────────────────────────────────
+'  Styling
+' ─────────────────────────────────────────────
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam Padding 6
+skinparam RoundCorner 12
+
+skinparam actor {
+  BackgroundColor #FAF6EF
+  BorderColor     #2B2D6E
+  FontColor       #2B2D6E
+  FontSize        12
+  FontStyle       bold
+}
+
+skinparam usecase {
+  BackgroundColor #FAF6EF
+  BorderColor     #2B2D6E
+  BorderThickness 1.5
+  FontColor       #1a1a2e
+  FontSize        11
+}
+
+skinparam package {
+  BackgroundColor #F5F0E8
+  BorderColor     #2B2D6E
+  BorderThickness 1.5
+  FontColor       #2B2D6E
+  FontSize        13
+  FontStyle       bold
+}
+
+skinparam rectangle {
+  BackgroundColor #EDE8DF
+  BorderColor     #2B2D6E
+  BorderThickness 2.5
+  FontColor       #2B2D6E
+  FontSize        14
+  FontStyle       bold
+}
+
+skinparam note {
+  BackgroundColor #FFFBF0
+  BorderColor     #C9933A
+  FontColor       #5a3e00
+  FontSize        10
+}
+
+skinparam ArrowColor     #2B2D6E
+skinparam ArrowThickness 1.2
+
+' ─────────────────────────────────────────────
+'  Actors
+' ─────────────────────────────────────────────
+actor "Tourist / Gast"          as Guest
+actor "Registrierter\nNutzer"   as User
+actor "System"                  as System
+actor "Service Worker\n(PWA)"   as SW
+
+' Generalization: User inherits all Guest interactions
+User -|> Guest
+
+' ─────────────────────────────────────────────
+'  System boundary
+' ─────────────────────────────────────────────
+rectangle "Sanxia Old Street Explorer  —  三峽老街探索" {
+
+  ' ── Row 1 ──────────────────────────────────
+  package "Authentifizierung" #EAF0FB {
+    usecase "Registrieren"              as UC_Register
+    usecase "Einloggen"                 as UC_Login
+    usecase "Ausloggen"                 as UC_Logout
+    usecase "Eingeloggt bleiben\n(7 Tage JWT)" as UC_Stay
+    usecase "Lokale Daten\nmigrieren"   as UC_Migrate
+  }
+
+  package "Shop-Entdeckung" #EBF7EB {
+    usecase "Shops browsen"             as UC_Browse
+    usecase "Shop-Details\nansehen"     as UC_ShopDetail
+    usecase "Besuchte Shops\nmarkieren" as UC_Visited
+  }
+
+  package "Events" #F0F8EB {
+    usecase "Events browsen"            as UC_Events
+    usecase "Event-Details\nansehen"    as UC_EventDetail
+  }
+
+  ' ── Row 2 ──────────────────────────────────
+  package "Check-in & Punkte" #FEF9EC {
+    usecase "An Shop\neinchecken"       as UC_CheckIn
+    usecase "Punkte erhalten"           as UC_EarnPts
+    usecase "Punktestand\neinsehen"     as UC_ViewPts
+    usecase "Tier-Status\neinsehen"     as UC_Tier
+  }
+
+  package "Rewards & Belohnungen" #F7ECEC {
+    usecase "Reward einlösen"           as UC_Redeem
+    usecase "Reward-Code\nerhalten"     as UC_Code
+    usecase "Einlöse-Historie\nansehen" as UC_History
+  }
+
+  package "Navigation & Planung" #F0EBF8 {
+    usecase "Route planen"              as UC_Route
+    usecase "Laufreihenfolge\nansehen"  as UC_Order
+    usecase "Gehzeiten einsehen"        as UC_Walk
+  }
+
+  ' ── Row 3 ──────────────────────────────────
+  package "PWA / Offline" #F8F4E8 {
+    usecase "App installieren"          as UC_Install
+    usecase "Install-Banner\nanzeigen"  as UC_Banner
+    usecase "Inhalte offline\ncachen"   as UC_Cache
+    usecase "App offline nutzen"        as UC_Offline
+  }
+
+}
+
+' ─────────────────────────────────────────────
+'  Guest connections (inherited by User too)
+' ─────────────────────────────────────────────
+Guest --> UC_Register
+Guest --> UC_Login
+Guest --> UC_Browse
+Guest --> UC_ShopDetail
+Guest --> UC_Events
+Guest --> UC_Install
+Guest --> UC_Offline
+
+' ─────────────────────────────────────────────
+'  User-only connections
+' ─────────────────────────────────────────────
+User --> UC_Logout
+User --> UC_Visited
+User --> UC_CheckIn
+User --> UC_ViewPts
+User --> UC_Tier
+User --> UC_Redeem
+User --> UC_History
+User --> UC_Route
+User --> UC_Migrate
+
+' ─────────────────────────────────────────────
+'  System & Service Worker
+' ─────────────────────────────────────────────
+System --> UC_EarnPts
+System --> UC_Stay
+System --> UC_Code
+SW     --> UC_Cache
+SW     --> UC_Banner
+
+' ─────────────────────────────────────────────
+'  include / extend
+' ─────────────────────────────────────────────
+UC_Login   ..> UC_Stay    : <<include>>
+UC_CheckIn ..> UC_EarnPts : <<include>>
+UC_Redeem  ..> UC_Code    : <<include>>
+UC_Route   ..> UC_Order   : <<include>>
+UC_Route   ..> UC_Walk    : <<include>>
+UC_Offline ..> UC_Cache   : <<include>>
+UC_Install ..> UC_Banner  : <<extend>>
+UC_Migrate ..> UC_EarnPts : <<extend>>
+
+' ─────────────────────────────────────────────
+'  Notes
+' ─────────────────────────────────────────────
+note right of UC_CheckIn
+  1× pro Shop möglich
+  Bakery 40 | Temple 30
+  Indigo 80 | Tea 50
+end note
+
+note right of UC_Redeem
+  Explorer     →   0 Pts
+  Wanderer     → 200 Pts (−50)
+  Local Legend → 500 Pts (−100)
+end note
+
+note bottom of UC_Cache
+  Service Worker —
+  offline-first Strategie
+end note
+
+@enduml
