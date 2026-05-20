@@ -1,14 +1,16 @@
-const express  = require('express');
-const bcrypt   = require('bcryptjs');
-const jwt      = require('jsonwebtoken');
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { query } = require('../db');
 
 const router = express.Router();
 
+// Generate JWT token with 7-day expiration
 function makeToken(user) {
   return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
 }
 
+// Fetch user data along with their shop checkin IDs
 async function userWithCheckins(userId) {
   const u = await query('SELECT id, email, points FROM users WHERE id = $1', [userId]);
   const c = await query('SELECT shop_id FROM checkins WHERE user_id = $1', [userId]);
@@ -19,7 +21,7 @@ async function userWithCheckins(userId) {
 router.post('/register', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
-  if (password.length < 6)  return res.status(400).json({ error: 'Password must be at least 6 characters' });
+  if (password.length < 6) return res.status(400).json({ error: 'Password must be at least 6 characters' });
 
   try {
     const hash = await bcrypt.hash(password, 10);
