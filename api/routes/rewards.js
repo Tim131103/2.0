@@ -18,7 +18,7 @@ function randomCode() {
 }
 
 // POST /api/rewards/redeem
-router.post('/redeem', verify, async (req, res) => {
+router.post('/redeem', verify, async (req, res) => { //Refactoring dieser funktion nötig für ISO 25010:Wartbarkeit
   const { tierName } = req.body;
   const reward = REWARDS[tierName];
   if (!reward) return res.status(400).json({ error: 'Unknown tier' });
@@ -27,7 +27,7 @@ router.post('/redeem', verify, async (req, res) => {
   const userResult = await query('SELECT points FROM users WHERE id = $1', [userId]);
   const currentPts = userResult.rows[0].points;
 
-  if (currentPts < reward.requiredPts) {
+  if (currentPts < reward.requiredPts) { //outsourcen der Geschäftslogik in RewardService.js
     return res.status(400).json({ error: 'Not enough points to redeem this reward' });
   }
 
@@ -40,8 +40,8 @@ router.post('/redeem', verify, async (req, res) => {
   let remainingPoints = currentPts;
   if (reward.cost > 0) {
     const updated = await query(
-      'UPDATE users SET points = points - $1 WHERE id = $2 RETURNING points',
-      [reward.cost, userId]
+      'UPDATE users SET points = points - $1 WHERE id = $2 RETURNING points', //fehlendes Begin
+      [reward.cost, userId] //fehlendes Rollback
     );
     remainingPoints = updated.rows[0].points;
   }
@@ -52,7 +52,7 @@ router.post('/redeem', verify, async (req, res) => {
 // GET /api/rewards/history
 router.get('/history', verify, async (req, res) => {
   const result = await query(
-    'SELECT reward_code, tier_name, points_spent, redeemed_at FROM redemptions WHERE user_id = $1 ORDER BY redeemed_at DESC',
+    'SELECT reward_code, tier_name, points_spent, redeemed_at FROM redemptions WHERE user_id = $1 ORDER BY redeemed_at DESC', //fehlendes Rollback
     [req.user.id]
   );
   res.json(result.rows.map(r => ({
