@@ -4,15 +4,15 @@ import { api } from '../api';
 import { usePullToRefresh } from '../hooks/usePullToRefresh';
 
 export default function ShopsPage({ checkedIn, token, onCheckInSuccess }) {
-  const [toast, setToast] = useState(null);
+  const [toast, setToast] = useState(null); //einführen von Statepattern für ist-zustand
 
   async function handleCheckIn(shop) {
     if (checkedIn.has(shop.id)) return;
     try {
-      const result = await api.checkIn(shop.id, token);
-      onCheckInSuccess({ shopId: shop.id, totalPoints: result.totalPoints });
+      const result = await api.checkIn(shop.id, token); //Refactoring nötig aufgrund ISO 25010: Asynchronität
+      onCheckInSuccess({ shopId: shop.id, totalPoints: result.totalPoints });// IDLE, LOADING, SUCCESS, ERROR als states
       setToast(`+${result.pointsAwarded} pts earned at ${shop.name}!`);
-      setTimeout(() => setToast(null), 2500);
+      setTimeout(() => setToast(null), 2500); //erster Toast löscht zweiten bei schnellem Klicken
     } catch (err) {
       setToast(err.message);
       setTimeout(() => setToast(null), 2500);
